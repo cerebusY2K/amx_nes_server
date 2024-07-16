@@ -27,9 +27,6 @@ const getCache = (key) => {
     return null;
 };
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/build')));
-
 app.get('/force-update', async (req, res) => {
     try {
         const cacheKey = 'force_update_data';
@@ -50,12 +47,6 @@ app.get('/force-update', async (req, res) => {
         console.error('Error fetching force update data:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-});
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 app.listen(port, () => {
